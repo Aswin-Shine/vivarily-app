@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # Production service
+  vivarily-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: vivarily-production
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - vivarily-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vivarily.rule=Host(`localhost`)"
+      - "traefik.http.services.vivarily.loadbalancer.server.port=80"
+
+  # Development service (use with --profile dev)
+  vivarily-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: vivarily-development
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./src:/app:cached
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=3000
+    stdin_open: true
+    tty: true
+    networks:
+      - vivarily-network
+    profiles:
+      - dev
+
+  # Testing service (use with --profile test)
+  vivarily-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: testing
+    container_name: vivarily-testing
+    volumes:
+      - ./src:/app:cached
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+    networks:
+      - vivarily-network
+    profiles:
+      - test
+
+  # Nginx reverse proxy (optional, use with --profile proxy)
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: vivarily-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - vivarily-app
+    networks:
+      - vivarily-network
+    profiles:
+      - proxy
+
+networks:
+  vivarily-network:
+    driver: bridge
+    name: vivarily-network
+
+volumes:
+  node_modules:
+    driver: local
