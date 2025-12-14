@@ -20,9 +20,11 @@ RUN apk add --no-cache \
 # Copy package.json first for better Docker layer caching
 COPY src/package.json ./package.json
 
+# Copy the lock file required by npm ci
+COPY src/package-lock.json ./package-lock.json
+
 # Install dependencies with clean install for reproducible builds
-RUN npm ci --only=production --silent && \
-    npm cache clean --force
+RUN npm ci  && npm cache clean --force
 
 # Copy all source files
 COPY src/ ./
