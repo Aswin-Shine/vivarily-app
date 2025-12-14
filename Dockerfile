@@ -84,10 +84,6 @@ application/ld+json
 image/svg+xml
 text/x-component;
 
-# Brotli compression (if available)
-brotli on;
-brotli_comp_level 6;
-brotli_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
 # Handle React Router (client-side routing)
 location / {
@@ -102,7 +98,7 @@ add_header Pragma "no-cache";
 }
 
 # Aggressive caching for static assets
-location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|webp|avif)$ {
+location ~* \.(js|css|tsx|ts|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|webp|avif)$ {
 expires 1y;
 add_header Cache-Control "public, immutable";
 access_log off;
