@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # vivarily-app
 =======
 <div align="center">
