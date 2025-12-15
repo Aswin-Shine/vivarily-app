@@ -1,10 +1,10 @@
-# vivarily-app
-=======
+# Vivarily-App
+
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-A modern TypeScript application — scaffolded with Google AI Studio — that [brief one-line description of what vivarily-app does — replace this]. The containerization (Dockerfile and docker-compose.yml) was created by Aswin-Shine.
+A modern TypeScript application — scaffolded with Google AI Studio — that gives services to people for creating modern day web app and applications according to their preferences. The containerization (Dockerfile and docker-compose.yml) was created by Aswin-Shine.
 
 [![Languages](https://img.shields.io/badge/languages-TypeScript%20%7C%20Shell%20%7C%20Dockerfile%20%7C%20HTML-blue)](#)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](#)
@@ -193,10 +193,3 @@ For questions or help, open an issue or reach out via GitHub discussions.
 - Dockerfile & docker-compose.yml: authored by Aswin-Shine
 - Any additional libraries, templates, or contributors you want to call out
 
----
-
-If you'd like, I can:
-- create a ready-to-commit `.env.example` from your environment variables,
-- add other badges (CI/coverage) and update README,
-- or prepare a PR/commit the README and LICENSE for you.
-```
